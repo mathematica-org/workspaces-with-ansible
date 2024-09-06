@@ -43,10 +43,12 @@ def generate_inventory(workspaces):
 
         if group_name.startswith('windows'):
             host_vars = {
-                'ansible_connection': 'winrm',
-                'ansible_winrm_transport': 'kerberos',
-                'ansible_winrm_port': '5985',
-                'ansible_winrm_kerberos_hostname_override': computer_name
+                'ansible_connection': 'ssh',
+                'ansible_user': 'jrosenbaum',
+                'ansible_shell_type': 'cmd',
+                'ansible_ssh_common_args': '-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null',
+                'ansible_ssh_retries': 3,
+                'ansible_become_method': 'runas'
             }
         else:
             host_vars = {
